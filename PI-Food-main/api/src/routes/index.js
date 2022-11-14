@@ -1,4 +1,4 @@
-const { Router } = require('express');
+const router = require('express').Router()
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -13,9 +13,9 @@ const axios = require('axios')
 const recipesRouter = require('./recipes.js')
 const typesRouter = require('./types.js')
 
-const router = Router();
+// const router = Router();
 
-// router.use('/recipes', recipesRouter)
-// router.use('/types', typesRouter)     // -----------AQUI SE ROMPE TODO
+router.use('/recipes', recipesRouter)
+router.use('/types', typesRouter)     
 
 module.exports = router;

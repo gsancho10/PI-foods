@@ -1,4 +1,4 @@
-const { Router } = require('express')
+const  router  = require('express').Router()
 require ('dotenv').config()
 
 const {YOUR_API_KEY} = process.env
@@ -7,7 +7,7 @@ const {Recipe, Diet} = require ('../db')
 // const getAllrecipes = require('./controller')
 
 
-const router = Router()
+// const router = Router()
 
 const getApiInfo = async () => {
     const URL = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true&number=100`)
@@ -71,7 +71,7 @@ router.get('/', async (req,res) => {
 
 
 router.get('/:id', async (req,res) => {
-    const {id} = req.params
+    const id = req.params.id
     try {
         const allRecipes = await getAllrecipes()
         if(id) {
@@ -86,5 +86,35 @@ router.get('/:id', async (req,res) => {
         
     }
 })
+
+
+router.post('/', async (req,res) => {
+    let {name, summary, healthScore, steps, diets, image, createInDb} = req.body
+    try {
+
+        let recipeCreate = await Recipe.create({
+            name,
+            summary,
+            steps,  
+            healthScore,
+            diets,
+            image,
+            createInDb
+        })
+        
+        for (let i = 0; i < diets.length; i++) {
+            let diet = await Diet.findOne({
+                where: {name : diets[i]}
+                 });
+
+            recipeCreate.addDiet(diet)
+         }
+        res.send('Recipe created!')
+            } catch (error) {
+
+            res.status(400).send(error.message)
+        }
+        
+    })
 
 module.exports = router;

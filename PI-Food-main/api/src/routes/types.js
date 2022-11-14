@@ -1,7 +1,7 @@
-const { Router } = require('express');
+const router = require('express').Router();
 const { Diet } = require('../db');  //importo los modelos
 
-const router = Router();
+
 
 router.get('/', async (req, res) => {
     const diets = [
