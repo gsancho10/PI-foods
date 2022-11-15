@@ -11,11 +11,11 @@ const axios = require('axios')
 // Ejemplo: router.use('/auth', authRouter);
 
 const recipesRouter = require('./recipes.js')
-const typesRouter = require('./types.js')
+const dietsRouter = require('./diets.js')
 
 // const router = Router();
 
 router.use('/recipes', recipesRouter)
-router.use('/types', typesRouter)     
+router.use('/diets', dietsRouter)     
 
 module.exports = router;

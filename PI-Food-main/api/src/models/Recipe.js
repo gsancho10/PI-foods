@@ -17,20 +17,24 @@ module.exports = (sequelize) => {
     },
 
     summary:{
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
     },
 
     healthScore: {
-      type: DataTypes.FLOAT
+      type: DataTypes.FLOAT,
+      allowNull: false,
     },
     
     steps: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      validate: {
+        notEmpty: true,
+      }
     },
 
     createInDb: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
       defaultValue: true
     },
 
@@ -40,5 +44,8 @@ module.exports = (sequelize) => {
     }
 
     
-  });
+    }, 
+        { timestamps : false }
+  
+  );
 };
