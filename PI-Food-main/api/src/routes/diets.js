@@ -16,15 +16,19 @@ router.get('/', async (req, res) => {
         "fodmap friendly",
         "whole 30",
     ]
+    try{
 
-    diets.forEach(el => {
-        Diet.findOrCreate({ 
-            where: { name: el }  //por cada tipo de dieta
+        diets.forEach(el => {
+            Diet.findOrCreate({ 
+                where: { name: el }  //por cada tipo de dieta
+            })
         })
-    })
-
-    const allDiets = await Diet.findAll()
-    res.send(allDiets)
+        
+        const allDiets = await Diet.findAll()
+        res.status(200).send(allDiets)
+    } catch(error) {
+        res.status(400).send('Diet not found')
+    }
 })
 
 

@@ -11,10 +11,14 @@ module.exports = (sequelize) => {
       primaryKey: true,
           },
 
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+   name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+         // is: /([A-Z])\w+/,
+          notEmpty: true,
+        },
+      },
 
     summary:{
       type: DataTypes.STRING,

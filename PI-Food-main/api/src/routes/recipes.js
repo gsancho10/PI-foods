@@ -42,33 +42,25 @@ router.get('/:id', async (req,res) => {
 )
 
 
-router.post('/', async (req,res) => {
-    let {   name, summary, healthScore, steps, diets, image, createInDb } = req.body
-    if(!name || !summary || !steps || !healthScore) {
-        throw Error ('Faltan datos para crear receta')
-    }
+router.post("/", async (req, res) => {
+    let { name, summary, healthScore, image, steps, diets } = req.body;
     try {
-
-        let recipeCreate = await Recipe.create({
-            name,
-            summary,
-            steps,  
-            healthScore,
-            image,
-            createInDb
-        })
-        
-        const dietsInDb = await Diet.findAll({
-            where: { name: diets },
-        })
-        recipeCreate.addDiet(dietsInDb)
-        res.status(200).json(recipeCreate)
-
+      const newRecipe = await Recipe.create({
+        name,
+        image,
+        summary,
+        healthScore,
+        steps,
+        diets,
+      });
+      const dietsInDb = await Diet.findAll({
+        where: { name: diets },
+      });
+      newRecipe.addDiet(dietsInDb);
+      res.status(201).json(newRecipe);
     } catch (error) {
-
-            res.status(400).send(error.message)
-        }
-        
-    })
+      res.status(404).send(error.message);
+    }
+  });
 
 module.exports = router;
